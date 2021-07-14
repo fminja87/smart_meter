@@ -33,16 +33,17 @@ class CustomerController extends Controller
 
         //pesapal params
         $token = $params = NULL;
+
         $consumer_key = env('PESAPAL_KEY');
         $consumer_secret = env('PESAPAL_SECRET');
 
         $signature_method = new OAuthSignatureMethod_HMAC_SHA1();
 
-        if (env("PESAPAL_IS_LIVE") == true) {
+//        if (env("PESAPAL_IS_LIVE") == true) {
             $iframelink = 'https://www.pesapal.com/api/PostPesapalDirectOrderV4';
-        } else {
-            $iframelink = 'https://demo.pesapal.com/api/PostPesapalDirectOrderV4';
-        }
+//        } else {
+//            $iframelink = 'https://demo.pesapal.com/api/PostPesapalDirectOrderV4';
+        //}
 
         //get form details
         $amount = intval(number_format($request->amount, 0));
