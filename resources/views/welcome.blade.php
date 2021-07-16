@@ -55,6 +55,13 @@
             </li>
 
             <li class="nav-item dropdown">
+                <a href="{{ route('admin.login') }}" class="navbar-nav-link">
+                    <i class="icon-user-block"></i>
+                    <span class="d-md-none ml-2">Admin Login</span>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
                 <a href="{{ route('register') }}" class="navbar-nav-link">
                     <i class="icon-user-plus"></i>
                     <span class="d-md-none ml-2">Customer Registration</span>
