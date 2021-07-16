@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>REGISTRATION</title>
+    <title>HOME</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -34,7 +34,7 @@
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
         <a href="{{ url('/') }}" class="d-inline-block">
-            SMWBS
+            <h1 style="color: #fff"><b>SMWBS</b></h1>
         </a>
     </div>
 
@@ -96,11 +96,6 @@
 						&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
 					</span>
 
-                <ul class="navbar-nav ml-lg-auto">
-                    <li class="nav-item"><a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
-                    <li class="nav-item"><a href="http://demo.interface.club/limitless/docs/" class="navbar-nav-link" target="_blank"><i class="icon-file-text2 mr-2"></i> Docs</a></li>
-                    <li class="nav-item"><a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold"><span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Purchase</span></a></li>
-                </ul>
             </div>
         </div>
         <!-- /footer -->

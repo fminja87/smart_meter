@@ -23,24 +23,11 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
-
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/dashboard.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/streamgraph.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/sparklines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/lines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/areas.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/donuts.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bars.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/progress.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/heatmaps.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/pies.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bullets.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
+    <script src="{{ asset('global_assets/js/demo_pages/datatables_basic.js') }}"></script>
     <!-- /theme JS files -->
 
 </head>
@@ -248,55 +235,53 @@
         <!-- Content area -->
         <div class="content">
 
-            <div class="row">
-                <div class="col-sm-6 col-xl-4">
-                    <a href="">
-                        <div class="card card-body bg-blue-400 has-bg-image">
-                            <div class="media">
-                                <div class="media-body">
-                                    <span class="text-uppercase font-size-xs">BILLS</span>
-                                </div>
-
-                                <div class="ml-3 align-self-center">
-                                    <i class="icon-list-ordered icon-3x opacity-75"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Transactions</h5>
                 </div>
 
-                <div class="col-sm-6 col-xl-4">
-                    <a href="{{ route('customer.payment.translation') }}">
-                    <div class="card card-body bg-danger-400 has-bg-image">
-                        <div class="media">
-                            <div class="media-body">
-                                <span class="text-uppercase font-size-xs">PAYMENTS</span>
-                            </div>
+                <div class="card-body">
+                    <table class="table datatable-basic">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Currency</th>
+                            <th>Phone Number</th>
+                            <th>Description</th>
+                            <th>ID</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($transactions as $transaction)
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($transaction->created_at)->diffForHumans() }}</td>
+                                <td>{{ $transaction->amount }}</td>
+                                <td>{{ $transaction->currency }}</td>
+                                <td>{{ $transaction->phone }}</td>
+                                <td>{{ $transaction->description }}</td>
+                                <td>{{ $transaction->pesapal_transaction_tracking_id }}</td>
+                                <td class="text-center">
+                                    <div class="list-icons">
+                                        <div class="dropdown">
+                                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                <i class="icon-menu9"></i>
+                                            </a>
 
-                            <div class="ml-3 align-self-center">
-                                <i class="icon-cash icon-3x opacity-75"></i>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Export to .pdf</a>
+                                                <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Export to .csv</a>
+                                                <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Export to .doc</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="col-sm-6 col-xl-4">
-                    <a href="{{ route('customer.initiate.payment') }}">
-                    <div class="card card-body bg-success-400 has-bg-image">
-                        <div class="media">
-                            <div class="mr-3 align-self-center">
-                                <i class="icon-cash2 icon-3x opacity-75"></i>
-                            </div>
-
-                            <div class="media-body text-right">
-                                <span class="text-uppercase font-size-xs">MAKE PAYMENT</span>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-
             </div>
 
         </div>
@@ -314,9 +299,8 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
 					<span class="navbar-text">
-					&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
+						&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
 					</span>
-
             </div>
         </div>
         <!-- /footer -->

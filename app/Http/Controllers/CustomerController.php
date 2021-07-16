@@ -205,4 +205,12 @@ class CustomerController extends Controller
 
         return $prefix . $str;
     }
+
+    public function showTransaction(){
+
+        $transactions = Transaction::where('user_id',Auth::user()->id)->orderBy('id','DESC')->get();
+
+        return view('customer.payment_transaction',['transactions'=>$transactions]);
+
+    }
 }

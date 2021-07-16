@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+    <title>ADMIN | DASHBOARD</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -30,17 +30,10 @@
     <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/dashboard.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/streamgraph.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/sparklines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/lines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/areas.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/donuts.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bars.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/progress.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/heatmaps.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/pies.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bullets.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
+    <script src="{{ asset('global_assets/js/demo_pages/datatables_basic.js') }}"></script>
     <!-- /theme JS files -->
 
 </head>
@@ -51,7 +44,7 @@
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
         <a href="" class="d-inline-block">
-            <h1>YHT</h1>
+            <h1 style="color: #fff"><b>SMWBS</b></h1>
         </a>
     </div>
 
@@ -256,7 +249,92 @@
         <!-- Content area -->
         <div class="content">
 
-            <h1>Admin Dashboard</h1>
+            <div class="row">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card card-body bg-blue-400 has-bg-image">
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="mb-0">{{ number_format($customers) }}</h3>
+                                <span class="text-uppercase font-size-xs">total customers</span>
+                            </div>
+
+                            <div class="ml-3 align-self-center">
+                                <i class="icon-users icon-3x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card card-body bg-danger-400 has-bg-image">
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="mb-0">{{ number_format($transactions) }}</h3>
+                                <span class="text-uppercase font-size-xs">Unpaid Transactions</span>
+                            </div>
+
+                            <div class="ml-3 align-self-center">
+                                <i class="icon-bag icon-3x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card card-body bg-success-400 has-bg-image">
+                        <div class="media">
+                            <div class="mr-3 align-self-center">
+                                <i class="icon-pointer icon-3x opacity-75"></i>
+                            </div>
+
+                            <div class="media-body text-right">
+                                <h3 class="mb-0">{{ number_format($paid) }}</h3>
+                                <span class="text-uppercase font-size-xs">Paid Bills</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Today Transactions</h5>
+                </div>
+
+                <table class="table datatable-basic">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Phone</th>
+                        <th>Reference Number</th>
+                        <th>Tracking ID</th>
+                        <th>Merchant Reference</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($today_transactions as $today_transaction)
+                        <tr>
+                            <td>{{ $today_transaction->name }}</td>
+                            <td>{{ $today_transaction->amount }}</td>
+                            <td>{{ $today_transaction->phone }}</td>
+                            <td>{{ $today_transaction->reference }}</td>
+                            <td>{{ $today_transaction->pesapal_transaction_tracking_id }}</td>
+                            <td>{{ $today_transaction->pesapal_merchant_reference }}</td>
+                            <td>
+                                @if($today_transaction->status != null)
+                                    <span class="badge badge-success">Paid</span>
+                                @else
+                                    <span class="badge badge-danger">Not Paid</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
 
         </div>
         <!-- /content area -->
@@ -273,14 +351,8 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
 					<span class="navbar-text">
-						&copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+						&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
 					</span>
-
-                <ul class="navbar-nav ml-lg-auto">
-                    <li class="nav-item"><a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
-                    <li class="nav-item"><a href="http://demo.interface.club/limitless/docs/" class="navbar-nav-link" target="_blank"><i class="icon-file-text2 mr-2"></i> Docs</a></li>
-                    <li class="nav-item"><a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold"><span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Purchase</span></a></li>
-                </ul>
             </div>
         </div>
         <!-- /footer -->

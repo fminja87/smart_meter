@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -14,7 +16,21 @@ class AdminController extends Controller
 
    public function home(){
 
-       return view('admin.dashboard');
+       $date = date('Y-m-d');
+
+        $customers = User::select('*')->count('*');
+
+        $transactions = Transaction::where('status','=', null)->count('*');
+
+        $paid = Transaction::where('status','!=', null)->count('*');
+
+        $today_transactions = DB::table('transactions')
+            ->join('users','transactions.user_id','=','users.id')
+            ->whereDate('transactions.created_at','=',$date)
+            ->select('transactions.*','users.name')
+            ->get();
+
+       return view('admin.dashboard',['customers'=>$customers, 'transactions'=>$transactions, 'paid'=>$paid,'today_transactions'=>$today_transactions]);
    }
 
    public function showCustomers(){

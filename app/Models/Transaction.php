@@ -10,12 +10,12 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'amount', 'currency', 'description', 'reference', 'phone', 'status', 'tracking_id', 'payment_method'
+        'user_id', 'amount', 'currency', 'description', 'reference', 'phone', 'status', 'pesapal_transaction_tracking_id', 'pesapal_merchant_reference', 'pesapal_notification_type', 'payment_method'
     ];
 
     protected $table = 'transactions';
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(User::class);
     }
