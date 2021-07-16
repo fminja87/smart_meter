@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\IpnController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin;
 
@@ -39,3 +40,6 @@ Route::get('admin/customers',[AdminController::class,'showCustomers'])->name('ad
 Route::get('customer/initiate/payment',[CustomerController::class,'initiatePayments'])->name('customer.initiate.payment');
 Route::post('customer/initiate/payment/submit',[CustomerController::class,'MakePayment'])->name('customer.initiate.payment.submit');
 Route::get('customer/payment/translation',[CustomerController::class,'showTransaction'])->name('customer.payment.translation');
+
+
+Route::get('/ipn/callback',[IpnController::class,'__invoke'])->name('customer.payment.translation');
