@@ -42,4 +42,4 @@ Route::post('customer/initiate/payment/submit',[CustomerController::class,'MakeP
 Route::get('customer/payment/translation',[CustomerController::class,'showTransaction'])->name('customer.payment.translation');
 
 
-Route::get('/ipn/callback',[IpnController::class,'__invoke'])->name('customer.payment.translation');
+Route::get('/pesapal-ipn-listener',[IpnController::class,'__invoke'])->name('pesapal.ipn.listener');

@@ -12,7 +12,7 @@ class IpnController extends Controller
 {
     public function __invoke()
     {
-        $transaction = Pesapal::getTransactionDetails(
+        $transaction = (new \Bryceandy\Laravel_Pesapal\Pesapal)->getTransactionDetails(
             request('pesapal_merchant_reference'), request('pesapal_transaction_tracking_id')
         );
 
