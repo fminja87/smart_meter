@@ -28,10 +28,10 @@ class RegisteredUserController extends Controller
      * Handle an incoming registration request.
      *
      * @param Request $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      *
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'first_name' => 'required|string|max:255',
@@ -58,8 +58,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $response = ['message'=>"User create successful"];
-
-        return response()->json($response, 201);
+        return redirect()->back()->with('success','User create successful');
     }
 }
