@@ -205,6 +205,14 @@
 								</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('customer.wallet') }}" class="nav-link">
+                            <i class="icon-wallet"></i>
+                            <span>
+									Wallet
+								</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /main navigation -->
@@ -232,7 +240,7 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
                         <span class="breadcrumb-item active">Dashboard</span>
                     </div>
 
@@ -247,6 +255,42 @@
 
         <!-- Content area -->
         <div class="content">
+
+            @if ($message = Session::get('error'))
+
+                <div class="alert alert-danger alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
+                </div>
+
+            @endif
+
+            @if ($message = Session::get('info'))
+
+                <div class="alert alert-info alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
+                </div>
+
+            @endif
+
+            @if ($message = Session::get('success'))
+
+                <div class="alert alert-success alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
+                </div>
+
+            @endif
 
             <div class="card">
                 <div class="card-header header-elements-inline">
@@ -321,6 +365,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <select type="text" class="form-control" id="gate_way" name="gate_way">
+                                    <option value="">Select Payment Gateway</option>
+                                    <option value="PL">Pesapal</option>
+                                    <option value="WL">Wallet</option>
+                                </select>
+                                <div class="form-control-feedback">
+                                    <i class="icon-cash2 text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="row">

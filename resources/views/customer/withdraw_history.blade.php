@@ -7,7 +7,8 @@
     <title>CUSTOMER | DASHBOARD</title>
 
     <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
     <link href="{{ asset('global_assets/css/icons/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/bootstrap_limitless.min.css') }}" rel="stylesheet" type="text/css">
@@ -23,24 +24,10 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
-
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/dashboard.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/streamgraph.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/sparklines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/lines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/areas.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/donuts.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bars.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/progress.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/heatmaps.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/pies.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bullets.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+
+    <script src="{{ asset('global_assets/js/demo_pages/datatables_basic.js') }}"></script>
     <!-- /theme JS files -->
 
 </head>
@@ -96,7 +83,8 @@
                         <ul class="media-list">
                             <li class="media">
                                 <div class="mr-3 position-relative">
-                                    <img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}" width="36" height="36" class="rounded-circle" alt="">
+                                    <img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                                         width="36" height="36" class="rounded-circle" alt="">
                                 </div>
 
                                 <div class="media-body">
@@ -107,21 +95,24 @@
                                         </a>
                                     </div>
 
-                                    <span class="text-muted">who knows, maybe that would be the best thing for me...</span>
+                                    <span
+                                        class="text-muted">who knows, maybe that would be the best thing for me...</span>
                                 </div>
                             </li>
                         </ul>
                     </div>
 
                     <div class="dropdown-content-footer justify-content-center p-0">
-                        <a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
+                        <a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i
+                                class="icon-menu7 d-block top-0"></i></a>
                     </div>
                 </div>
             </li>
 
             <li class="nav-item dropdown dropdown-user">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}" class="rounded-circle mr-2" height="34" alt="">
+                    <img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                         class="rounded-circle mr-2" height="34" alt="">
                     <span>{{Auth::user()->name}}</span>
                 </a>
 
@@ -130,7 +121,9 @@
                     <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();document.getElementById('out-form').submit();"
+                       class="dropdown-item"><i class="icon-switch2"></i>
                         <form id="out-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -172,13 +165,15 @@
                 <div class="card-body">
                     <div class="media">
                         <div class="mr-3">
-                            <a href="#"><img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}" width="38" height="38" class="rounded-circle" alt=""></a>
+                            <a href="#"><img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                                             width="38" height="38" class="rounded-circle" alt=""></a>
                         </div>
 
                         <div class="media-body">
                             <div class="media-title font-weight-semibold">{{ Auth::User()->name }}</div>
                             <div class="font-size-xs opacity-50">
-                                <i class="icon-pin font-size-sm"></i> &nbsp;{{Auth::user()->region}}, {{Auth::user()->district}}
+                                <i class="icon-pin font-size-sm"></i> &nbsp;{{Auth::user()->region}}
+                                , {{Auth::user()->district}}
                             </div>
                         </div>
 
@@ -196,9 +191,11 @@
                 <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                     <!-- Main -->
-                    <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
+                    <li class="nav-item-header">
+                        <div class="text-uppercase font-size-xs line-height-xs">Main</div>
+                        <i class="icon-menu" title="Main"></i></li>
                     <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link active">
+                        <a href="{{ route('dashboard') }}" class="nav-link">
                             <i class="icon-home4"></i>
                             <span>
 									Dashboard
@@ -206,7 +203,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('customer.wallet') }}" class="nav-link">
+                        <a href="{{ route('customer.wallet') }}" class="nav-link active">
                             <i class="icon-wallet"></i>
                             <span>
 									Wallet
@@ -231,7 +228,8 @@
         <div class="page-header page-header-light">
             <div class="page-header-content header-elements-md-inline">
                 <div class="page-title d-flex">
-                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Dashboard</h4>
+                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> -
+                        Dashboard</h4>
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
                 </div>
 
@@ -241,12 +239,12 @@
                 <div class="d-flex">
                     <div class="breadcrumb">
                         <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
-                        <span class="breadcrumb-item active">Dashboard</span>
+                        <span class="breadcrumb-item active">Wallet</span>
                     </div>
 
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
-                </div>
 
+                </div>
 
             </div>
         </div>
@@ -256,55 +254,65 @@
         <!-- Content area -->
         <div class="content">
 
-            <div class="row">
-                <div class="col-sm-6 col-xl-4">
-                    <a href="">
-                        <div class="card card-body bg-blue-400 has-bg-image">
-                            <div class="media">
-                                <div class="media-body">
-                                    <span class="text-uppercase font-size-xs">BILLS</span>
-                                </div>
+            @if ($message = Session::get('error'))
 
-                                <div class="ml-3 align-self-center">
-                                    <i class="icon-list-ordered icon-3x opacity-75"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                <div class="alert alert-danger alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
                 </div>
 
-                <div class="col-sm-6 col-xl-4">
-                    <a href="{{ route('customer.payment.translation') }}">
-                    <div class="card card-body bg-danger-400 has-bg-image">
-                        <div class="media">
-                            <div class="media-body">
-                                <span class="text-uppercase font-size-xs">PAYMENTS</span>
-                            </div>
+            @endif
 
-                            <div class="ml-3 align-self-center">
-                                <i class="icon-cash icon-3x opacity-75"></i>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
+            @if ($message = Session::get('info'))
+
+                <div class="alert alert-info alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
                 </div>
 
-                <div class="col-sm-6 col-xl-4">
-                    <a href="{{ route('customer.initiate.payment') }}">
-                    <div class="card card-body bg-success-400 has-bg-image">
-                        <div class="media">
-                            <div class="mr-3 align-self-center">
-                                <i class="icon-cash2 icon-3x opacity-75"></i>
-                            </div>
+            @endif
 
-                            <div class="media-body text-right">
-                                <span class="text-uppercase font-size-xs">MAKE PAYMENT</span>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
+            @if ($message = Session::get('success'))
+
+                <div class="alert alert-success alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
                 </div>
 
+            @endif
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h6 class="card-title"><i class="icon-wallet"></i> Wallet</h6>
+                </div>
+
+                <div class="card-body">
+                    <table class="table datatable-basic">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($withdraw_histories as $withdraw_history)
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($withdraw_history->created_at)->diffForHumans() }}</td>
+                                <td>{{ number_format($withdraw_history->withdraw) }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -314,7 +322,8 @@
         <!-- Footer -->
         <div class="navbar navbar-expand-lg navbar-light">
             <div class="text-center d-lg-none w-100">
-                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+                        data-target="#navbar-footer">
                     <i class="icon-unfold mr-2"></i>
                     Footer
                 </button>

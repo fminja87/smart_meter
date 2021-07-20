@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Transaction;
+use App\Models\Wallet_store;
+use App\Models\Wallet_withdraw;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthConsumer;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthRequest;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthSignatureMethod_HMAC_SHA1;
@@ -26,6 +28,16 @@ class CustomerController extends Controller
     public function MakePayment(Request $request)
     {
 
+        if ($request->gate_way == "WL"){
+
+            $withdraw = new Wallet_withdraw();
+            $withdraw->user_id = Auth::user()->id;
+            $withdraw->withdraw = $request->input('amount');
+            $withdraw->save();
+
+            return redirect()->back()->with('success','Payment done successful from wallet');
+        }
+
         $payment = new Payment();
         $payment->amount = $request->input('amount');
         $payment->user_id = Auth::user()->id;
@@ -40,7 +52,7 @@ class CustomerController extends Controller
         $signature_method = new OAuthSignatureMethod_HMAC_SHA1();
 
 //        if (env("PESAPAL_IS_LIVE") == true) {
-            $iframelink = 'https://www.pesapal.com/api/PostPesapalDirectOrderV4';
+        $iframelink = 'https://www.pesapal.com/api/PostPesapalDirectOrderV4';
 //        } else {
 //            $iframelink = 'https://demo.pesapal.com/api/PostPesapalDirectOrderV4';
         //}
@@ -212,5 +224,49 @@ class CustomerController extends Controller
 
         return view('customer.payment_transaction',['transactions'=>$transactions]);
 
+    }
+
+    public function wallet(){
+
+        $deposit = Wallet_store::where('user_id',Auth::user()->id)->sum('deposit');
+        $withdraw = Wallet_withdraw::where('user_id',Auth::user()->id)->sum('withdraw');
+
+        $last_deposit = Wallet_store::where('user_id',Auth::user()->id)->latest()->first();
+        $last_withdraw = Wallet_withdraw::where('user_id',Auth::user()->id)->latest()->first();
+
+        $balance = $deposit - $withdraw;
+
+        //dd($deposit,$withdraw,$last_deposit,$last_withdraw,$balance);
+        return view('customer.wallet',['balance'=>$balance,'last_deposit'=>$last_deposit,'last_withdraw'=>$last_withdraw]);
+    }
+
+    public function deposit(Request $request): \Illuminate\Http\RedirectResponse
+    {
+
+        $this->validate($request, [
+            'amount' => 'required',
+        ]);
+
+        $deposit = new Wallet_store();
+        $deposit->user_id = Auth::user()->id;
+        $deposit->deposit = $request->input('amount');
+        $deposit->save();
+
+        return redirect()->back()->with('success','Successful deposited to wallet');
+
+    }
+
+    public function depositHistory(){
+
+        $deposit_histories = Wallet_store::select('*')->orderBy('id','DESC')->get();
+
+        return view('customer.deposit_history',['deposit_histories'=>$deposit_histories]);
+    }
+
+    public function withdrawHistory(){
+
+        $withdraw_histories = Wallet_withdraw::select('*')->orderBy('id','DESC')->get();
+
+        return view('customer.withdraw_history',['withdraw_histories'=>$withdraw_histories]);
     }
 }

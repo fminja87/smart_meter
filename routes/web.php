@@ -40,6 +40,11 @@ Route::get('admin/customers',[AdminController::class,'showCustomers'])->name('ad
 Route::get('customer/initiate/payment',[CustomerController::class,'initiatePayments'])->name('customer.initiate.payment');
 Route::post('customer/initiate/payment/submit',[CustomerController::class,'MakePayment'])->name('customer.initiate.payment.submit');
 Route::get('customer/payment/translation',[CustomerController::class,'showTransaction'])->name('customer.payment.translation');
+Route::get('customer/wallet',[CustomerController::class,'wallet'])->name('customer.wallet');
+Route::post('customer/wallet/deposit',[CustomerController::class,'deposit'])->name('customer.wallet.deposit');
+
+Route::get('customer/wallet/deposit/history',[CustomerController::class,'depositHistory'])->name('customer.wallet.deposit.history');
+Route::get('customer/wallet/withdraw/history',[CustomerController::class,'withdrawHistory'])->name('customer.wallet.withdraw.history');
 
 
 Route::get('/pesapal-ipn-listener',[IpnController::class,'__invoke'])->name('pesapal.ipn.listener');

@@ -192,6 +192,14 @@
 								</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('customer.wallet') }}" class="nav-link">
+                            <i class="icon-wallet"></i>
+                            <span>
+									Wallet
+								</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /main navigation -->
@@ -219,7 +227,7 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
                         <span class="breadcrumb-item active">Dashboard</span>
                     </div>
 

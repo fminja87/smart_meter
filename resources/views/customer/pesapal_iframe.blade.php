@@ -205,6 +205,14 @@
 								</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('customer.wallet') }}" class="nav-link">
+                            <i class="icon-wallet"></i>
+                            <span>
+									Wallet
+								</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /main navigation -->
