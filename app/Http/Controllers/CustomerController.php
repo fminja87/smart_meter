@@ -28,6 +28,17 @@ class CustomerController extends Controller
     public function MakePayment(Request $request)
     {
 
+        $this->validate($request,[
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required',
+            'phone'=>'required',
+            'amount'=>'required',
+            'currency'=>'required',
+            'gate_way'=>'required',
+            'description'=>'required',
+        ]);
+
         if ($request->gate_way == "WL"){
 
             $withdraw = new Wallet_withdraw();

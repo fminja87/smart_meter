@@ -63,6 +63,9 @@
                 <div class="row">
                     <div class="col-lg-6 offset-lg-3">
                         <div class="card mb-0">
+                            <form action="{{ route('register') }}" method="POST" >
+                                @csrf
+
                             <div class="card-body">
                                 <div class="text-center mb-3">
                                     <i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
@@ -73,19 +76,29 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First name">
+                                            <input type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" id="first_name" placeholder="First name" value="{{ old('first_name') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-user-check text-muted"></i>
                                             </div>
+                                            @if ($errors->has('first_name'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('first_name') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="second_name" id="second_name" placeholder="Second name">
+                                            <input type="text" class="form-control{{ $errors->has('second_name') ? ' is-invalid' : '' }}" name="second_name" id="second_name" placeholder="Second name" value="{{ old('second_name') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-user-check text-muted"></i>
                                             </div>
+                                            @if ($errors->has('second_name'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('second_name') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -93,19 +106,29 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="Your email">
+                                            <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email" placeholder="Your email" value="{{ old('email') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-mention text-muted"></i>
                                             </div>
+                                            @if ($errors->has('email'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('email') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="phone_number"  id="phone_number" placeholder="Phone Number">
+                                            <input type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number"  id="phone_number" placeholder="Phone Number" value="{{ old('phone_number') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-mobile text-muted"></i>
                                             </div>
+                                            @if ($errors->has('phone_number'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('phone_number') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -113,46 +136,71 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="region" id="region" placeholder="Region">
+                                            <input type="text" class="form-control{{ $errors->has('region') ? ' is-invalid' : '' }}" name="region" id="region" placeholder="Region" value="{{ old('region') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-location3 text-muted"></i>
                                             </div>
+                                            @if ($errors->has('region'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('region') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
                                       <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="district" id="district" placeholder="District">
+                                            <input type="text" class="form-control{{ $errors->has('district') ? ' is-invalid' : '' }}" name="district" id="district" placeholder="District" value="{{ old('district') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-location4 text-muted"></i>
                                             </div>
+                                            @if ($errors->has('district'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('district') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="ward" id="ward" placeholder="Ward">
+                                            <input type="text" class="form-control{{ $errors->has('ward') ? ' is-invalid' : '' }}" name="ward" id="ward" placeholder="Ward" value="{{ old('ward') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-location3 text-muted"></i>
                                             </div>
+                                            @if ($errors->has('ward'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('ward') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="street" id="street" placeholder="Street">
+                                            <input type="text" class="form-control{{ $errors->has('street') ? ' is-invalid' : '' }}" name="street" id="street" placeholder="Street" value="{{ old('street') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-road text-muted"></i>
                                             </div>
+                                            @if ($errors->has('street'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('street') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="text" class="form-control" name="house_number" id="house_number" placeholder="House Number">
+                                            <input type="text" class="form-control{{ $errors->has('house_number') ? ' is-invalid' : '' }}" name="house_number" id="house_number" placeholder="House Number" value="{{ old('house_number') }}">
                                             <div class="form-control-feedback">
                                                 <i class="icon-road text-muted"></i>
                                             </div>
+                                            @if ($errors->has('house_number'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('house_number') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -161,10 +209,15 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-group-feedback form-group-feedback-right">
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="Create password">
+                                            <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" id="password" placeholder="Create password">
                                             <div class="form-control-feedback">
                                                 <i class="icon-user-lock text-muted"></i>
                                             </div>
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -179,8 +232,9 @@
                                 </div>
 
 
-                                <button type="submit" class="btn btn-block bg-teal-400 btn-labeled btn-labeled-right" onclick="registerCustomer()"><b><i class="icon-plus3"></i></b> Create account</button>
+                                <button type="submit" class="btn btn-block bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-plus3"></i></b> Create account</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
