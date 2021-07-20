@@ -342,9 +342,6 @@
                                 <i class="icon-wallet icon-5x"></i>
                             </div>
                             @if($last_deposit == null)
-                                <div class="align-content-center">
-                                    <i class="icon-wallet icon-5x"></i>
-                                </div>
                                 <h1 align="center">No Transaction</h1>
                             @else
                                 <h1 align="center">Latest Deposit: Time
