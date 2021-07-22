@@ -38,4 +38,14 @@ class AdminController extends Controller
         $customers = User::select('*')->orderBy('id','DESC')->get();
         return view('admin.customers',['customers'=>$customers]);
    }
+
+   public function showCustomerBills(){
+
+        $bills = DB::table('transactions')
+            ->join('users','transactions.user_id','=','users.id')
+            ->select('users.name','users.meter_number','transactions.*')
+            ->get();
+
+        return view('admin.bills',['bills'=>$bills]);
+   }
 }

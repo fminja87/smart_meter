@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('ward');
             $table->string('street');
             $table->string('house_number');
+            $table->string('meter_number');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

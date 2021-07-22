@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use function GuzzleHttp\Promise\all;
 
 class RegisteredUserController extends Controller
 {
@@ -42,6 +43,7 @@ class RegisteredUserController extends Controller
             'district' => 'required',
             'ward' => 'required',
             'street' => 'required',
+            'meter_number'=>'required',
             'house_number' => 'required',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -55,6 +57,7 @@ class RegisteredUserController extends Controller
             'ward' => $request->ward,
             'street' => $request->street,
             'house_number' => $request->house_number,
+            'meter_number' => $request->meter_number,
             'password' => Hash::make($request->password),
         ]);
 

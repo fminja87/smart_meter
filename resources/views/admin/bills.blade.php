@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CUSTOMER | DASHBOARD</title>
+    <title>ADMIN | CUSTOMERS</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -23,24 +23,11 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
-
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/dashboard.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/streamgraph.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/sparklines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/lines.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/areas.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/donuts.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bars.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/progress.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/heatmaps.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/pies.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_charts/pages/dashboard/light/bullets.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
+    <script src="{{ asset('global_assets/js/demo_pages/datatables_basic.js') }}"></script>
     <!-- /theme JS files -->
 
 </head>
@@ -130,8 +117,8 @@
                     <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
-                        <form id="out-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
+                        <form id="out-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                         Logout
@@ -178,7 +165,7 @@
                         <div class="media-body">
                             <div class="media-title font-weight-semibold">{{ Auth::User()->name }}</div>
                             <div class="font-size-xs opacity-50">
-                                <i class="icon-pin font-size-sm"></i> &nbsp;{{Auth::user()->region}}, {{Auth::user()->district}}
+                                <i class="icon-envelop font-size-sm"></i> &nbsp;{{ Auth::User()->email }}
                             </div>
                         </div>
 
@@ -198,7 +185,7 @@
                     <!-- Main -->
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                     <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link active">
+                        <a href="{{ route('admin.home') }}" class="nav-link">
                             <i class="icon-home4"></i>
                             <span>
 									Dashboard
@@ -206,10 +193,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('customer.wallet') }}" class="nav-link">
-                            <i class="icon-wallet"></i>
+                        <a href="{{ route('admin.customers') }}" class="nav-link">
+                            <i class="icon-users"></i>
                             <span>
-									Wallet
+									Customers
+								</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.customers.bills') }}" class="nav-link active">
+                            <i class="icon-meter-fast"></i>
+                            <span>
+									Bills
 								</span>
                         </a>
                     </li>
@@ -240,8 +235,8 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
-                        <span class="breadcrumb-item active">Dashboard</span>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer's</a>
+                        <span class="breadcrumb-item active">List</span>
                     </div>
 
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
@@ -256,67 +251,35 @@
         <!-- Content area -->
         <div class="content">
 
-            <div class="row">
-                <div class="col-sm-6 col-xl-4">
-                    <a href="">
-                        <div class="card card-body bg-blue-400 has-bg-image">
-                            <div class="media">
-                                <div class="media-body">
-                                    <span class="text-uppercase font-size-xs">BILLS</span>
-                                </div>
-
-                                <div class="ml-3 align-self-center">
-                                    <i class="icon-list-ordered icon-3x opacity-75"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Customers</h5>
                 </div>
 
-                <div class="col-sm-6 col-xl-4">
-                    <a href="{{ route('customer.payment.translation') }}">
-                    <div class="card card-body bg-danger-400 has-bg-image">
-                        <div class="media">
-                            <div class="media-body">
-                                <span class="text-uppercase font-size-xs">PAYMENTS</span>
-                            </div>
-
-                            <div class="ml-3 align-self-center">
-                                <i class="icon-cash icon-3x opacity-75"></i>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-
-                <div class="col-sm-6 col-xl-4">
-                    <a href="{{ route('customer.initiate.payment') }}">
-                    <div class="card card-body bg-success-400 has-bg-image">
-                        <div class="media">
-                            <div class="mr-3 align-self-center">
-                                <i class="icon-cash2 icon-3x opacity-75"></i>
-                            </div>
-
-                            <div class="media-body text-right">
-                                <span class="text-uppercase font-size-xs">MAKE PAYMENT</span>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-
-            </div>
-
-            <div>
-
-                <h1 align="center" style="font-size: 50px">
-                    <i class="icon-meter2 icon-5x"></i>
-                    <br />
-                    <strong>METER NUMBER</strong>
-                    <br />
-                    {{ Auth::user()->meter_number }}
-                </h1>
-
+                <table class="table datatable-basic">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Reference Number</th>
+                        <th>Status</th>
+                        <th class="text-center">Meter Number</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($bills as $bill)
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($bill->created_at)->diffForHumans() }}</td>
+                            <td>{{ $bill->name }}</td>
+                            <td>{{ number_format($bill->amount) }} {{ $bill->currency }}</td>
+                            <td>{{ $bill->reference }}</td>
+                            <td>{{ $bill->status }}</td>
+                            <td>{{ $bill->meter_number }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
 
         </div>
@@ -334,7 +297,7 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
 					<span class="navbar-text">
-					&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
+							&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
 					</span>
 
             </div>

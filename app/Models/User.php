@@ -24,6 +24,7 @@ class User extends Authenticatable
         'district',
         'ward',
         'street',
+        'meter_number',
         'house_number',
         'password',
     ];

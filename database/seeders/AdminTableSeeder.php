@@ -16,7 +16,7 @@ class AdminTableSeeder extends Seeder
     public function run()
     {
         $admin = new Admin();
-        $admin->name = "Sytaem Admin";
+        $admin->name = "System Admin";
         $admin->email = "admin@system.com";
         $admin->password = Hash::make("12345678");
         $admin->save();

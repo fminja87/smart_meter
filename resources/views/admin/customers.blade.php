@@ -200,6 +200,14 @@
 								</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.customers.bills') }}" class="nav-link">
+                            <i class="icon-meter-fast"></i>
+                            <span>
+									Bills
+								</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /main navigation -->
@@ -256,7 +264,7 @@
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Region</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center">Meter Number</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -267,21 +275,7 @@
                         <td>{{ $customer->email }}</td>
                         <td>{{ $customer->phone_number }}</td>
                         <td>{{ $customer->region }},{{ $customer->district }},{{ $customer->street }}</td>
-                        <td class="text-center">
-                            <div class="list-icons">
-                                <div class="dropdown">
-                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                        <i class="icon-menu9"></i>
-                                    </a>
-
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Export to .pdf</a>
-                                        <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Export to .csv</a>
-                                        <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Export to .doc</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                        <td>{{ $customer->meter_number }}</td>
                     </tr>
                     @endforeach
                     </tbody>

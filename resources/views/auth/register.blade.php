@@ -240,6 +240,20 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-12">
+                                        <div class="form-group form-group-feedback form-group-feedback-right">
+                                            <input type="text" class="form-control{{ $errors->has('meter_number') ? ' is-invalid' : '' }}" name="meter_number" id="meter_number" placeholder="Meter Number" value="{{ old('meter_number') }}">
+                                            <div class="form-control-feedback">
+                                                <i class="icon-meter2 text-muted"></i>
+                                            </div>
+                                            @if ($errors->has('meter_number'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('meter_number') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="row">
@@ -265,6 +279,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
 

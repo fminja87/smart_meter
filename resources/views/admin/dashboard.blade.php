@@ -206,6 +206,14 @@
 								</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.customers.bills') }}" class="nav-link">
+                            <i class="icon-meter-fast"></i>
+                            <span>
+									Bills
+								</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- /main navigation -->

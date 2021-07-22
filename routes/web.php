@@ -35,7 +35,7 @@ Route::post('admin/logout',[Admin\AdminLoginController::class,'destroy'])->name(
 
 Route::get('admin/home',[AdminController::class,'home'])->name('admin.home');
 Route::get('admin/customers',[AdminController::class,'showCustomers'])->name('admin.customers');
-
+Route::get('admin/customers/bills',[AdminController::class,'showCustomerBills'])->name('admin.customers.bills');
 
 Route::get('customer/initiate/payment',[CustomerController::class,'initiatePayments'])->name('customer.initiate.payment');
 Route::post('customer/initiate/payment/submit',[CustomerController::class,'MakePayment'])->name('customer.initiate.payment.submit');
