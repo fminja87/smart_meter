@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Wallet_store;
 use App\Models\Wallet_withdraw;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthConsumer;
@@ -11,6 +12,8 @@ use Bryceandy\Laravel_Pesapal\OAuth\OAuthRequest;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthSignatureMethod_HMAC_SHA1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class CustomerController extends Controller
 {
@@ -279,5 +282,61 @@ class CustomerController extends Controller
         $withdraw_histories = Wallet_withdraw::select('*')->orderBy('id','DESC')->get();
 
         return view('customer.withdraw_history',['withdraw_histories'=>$withdraw_histories]);
+    }
+
+    public function userProfile(){
+
+        return view('customer.profile');
+    }
+
+    public function updateProfile(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $this->validate($request,[
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required',
+            'email' => 'required|string|email|max:255',
+            'region' => 'required',
+            'district' => 'required',
+            'ward' => 'required',
+            'street' => 'required',
+            'house_number' => 'required',
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->input('full_name');
+        $user->phone_number = $request->input('phone_number');
+        $user->email = $request->input('email');
+        $user->region = $request->input('region');
+        $user->district = $request->input('district');
+        $user->ward = $request->input('ward');
+        $user->street = $request->input('street');
+        $user->house_number = $request->input('house_number');
+        $user->save();
+
+        return redirect()->back()->with('success','Profile Information changed successful');
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function updatePassword(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => 'required|confirmed|min:6'
+        ]);
+
+        $hashedPassword = Auth::user()->password;
+
+        if (Hash::check($request->old_password, $hashedPassword)) {
+
+            $user = User::find(Auth::id());
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            return redirect()->back()->with('success', 'Congratulations,Your password is successful changed');
+        }
+
+        return redirect()->back()->with('error', 'Ooooops!,Something went wrong(may be the old password is wrong)');
     }
 }

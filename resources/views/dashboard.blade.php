@@ -126,10 +126,9 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-                    <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
+                    <a href="{{ route('customer.profile') }}" class="dropdown-item"><i class="icon-profile"></i> My profile</a>
+                    <a href="{{ route('customer.wallet') }}" class="dropdown-item"><i class="icon-wallet"></i> My balance</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
                         <form id="out-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -210,6 +209,14 @@
                             <i class="icon-wallet"></i>
                             <span>
 									Wallet
+								</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('customer.profile') }}" class="nav-link">
+                            <i class="icon-profile"></i>
+                            <span>
+									Profile
 								</span>
                         </a>
                     </li>

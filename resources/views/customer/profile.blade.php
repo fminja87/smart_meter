@@ -24,10 +24,9 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 
-    <script src="{{ asset('global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+
     <!-- /theme JS files -->
 
 </head>
@@ -202,7 +201,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('customer.wallet') }}" class="nav-link active">
+                        <a href="{{ route('customer.wallet') }}" class="nav-link">
                             <i class="icon-wallet"></i>
                             <span>
 									Wallet
@@ -210,7 +209,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('customer.profile') }}" class="nav-link">
+                        <a href="{{ route('customer.profile') }}" class="nav-link active">
                             <i class="icon-profile"></i>
                             <span>
 									Profile
@@ -235,8 +234,8 @@
         <div class="page-header page-header-light">
             <div class="page-header-content header-elements-md-inline">
                 <div class="page-title d-flex">
-                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> -
-                        Dashboard</h4>
+                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Profile</span>
+                        </h4>
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
                 </div>
 
@@ -246,12 +245,13 @@
                 <div class="d-flex">
                     <div class="breadcrumb">
                         <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
-                        <span class="breadcrumb-item active">Wallet</span>
+                        <span class="breadcrumb-item active">Profile</span>
                     </div>
 
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 
                 </div>
+
 
             </div>
         </div>
@@ -297,30 +297,160 @@
 
             @endif
 
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <h6 class="card-title"><i class="icon-wallet"></i> Wallet</h6>
-                </div>
+                <div class="row">
 
-                <div class="card-body">
-                    <table class="table datatable-basic">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Amount</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($withdraw_histories as $withdraw_history)
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($withdraw_history->created_at)->diffForHumans() }}</td>
-                                <td>{{ number_format($withdraw_history->withdraw) }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                    <div class="col-lg-8">
+                    <!-- Profile info -->
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Profile information</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <form action="{{ route('customer.profile.update') }}" method="POST">
+                                @csrf
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Full name</label>
+                                            <input type="text" name="full_name" id="full_name" value="{{Auth::user()->name}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                            <input type="email" name="email" id="email" value="{{ Auth::user()->email }}" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Phone Number</label>
+                                            <input type="text" name="phone_number" id="phone_number" value="{{ Auth::user()->phone_number }}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>City/Region</label>
+                                            <input type="text" name="region" id="region" value="{{ Auth::user()->region }}" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>District</label>
+                                            <input type="text" name="district" id="district" value="{{ Auth::user()->district }}" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Ward</label>
+                                            <input type="text" name="ward" id="ward" value="{{ Auth::user()->ward }}" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Street</label>
+                                            <input type="text" name="street" id="street" value="{{ Auth::user()->street }}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>House Number</label>
+                                            <input type="text" name="house_number" id="house_number" value="{{ Auth::user()->house_number }}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /profile info -->
+
+
+                    <!-- Account settings -->
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Account settings</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <form action="{{ route('customer.password.update') }}" method="POST">
+                                @csrf
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Current password</label>
+                                            <input type="password" name="old_password" id="old_password" class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="Enter Current Password">
+                                            @if ($errors->has('old_password'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('old_password') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>New password</label>
+                                            <input type="password" name="password" id="password" placeholder="Enter new password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label>Repeat New password</label>
+                                            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Repeat new password" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /account settings -->
+
+                    </div>
+
+                    <div class="col-lg-4">
+                        <!-- User card -->
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <div class="card-img-actions d-inline-block mb-3">
+                                    <img class="img-fluid rounded-circle" src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}" width="170" height="170" alt="">
+                                    <div class="card-img-actions-overlay card-img rounded-circle">
+                                        <a href="#" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+                                            <i class="icon-plus3"></i>
+                                        </a>
+                                        <a href="" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
+                                            <i class="icon-link"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <h6 class="font-weight-semibold mb-0">{{ Auth::user()->name }}</h6>
+                                <span class="d-block text-muted">{{ Auth::user()->meter_number }}</span>
+
+                            </div>
+                        </div>
+                        <!-- /user card -->
+                    </div>
+
                 </div>
-            </div>
+        <!-- /left content -->
+
 
         </div>
         <!-- /content area -->

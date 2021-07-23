@@ -36,6 +36,9 @@ Route::post('admin/logout',[Admin\AdminLoginController::class,'destroy'])->name(
 Route::get('admin/home',[AdminController::class,'home'])->name('admin.home');
 Route::get('admin/customers',[AdminController::class,'showCustomers'])->name('admin.customers');
 Route::get('admin/customers/bills',[AdminController::class,'showCustomerBills'])->name('admin.customers.bills');
+Route::get('admin/profile',[AdminController::class,'profile'])->name('admin.profile');
+Route::post('admin/update/profile',[AdminController::class,'updateProfile'])->name('admin.update.profile');
+Route::post('admin/update/password',[AdminController::class,'updatePassword'])->name('admin.update.password');
 
 Route::get('customer/initiate/payment',[CustomerController::class,'initiatePayments'])->name('customer.initiate.payment');
 Route::post('customer/initiate/payment/submit',[CustomerController::class,'MakePayment'])->name('customer.initiate.payment.submit');
@@ -45,6 +48,8 @@ Route::post('customer/wallet/deposit',[CustomerController::class,'deposit'])->na
 
 Route::get('customer/wallet/deposit/history',[CustomerController::class,'depositHistory'])->name('customer.wallet.deposit.history');
 Route::get('customer/wallet/withdraw/history',[CustomerController::class,'withdrawHistory'])->name('customer.wallet.withdraw.history');
-
+Route::get('customer/profile',[CustomerController::class,'userProfile'])->name('customer.profile');
+Route::post('customer/profile/update',[CustomerController::class,'updateProfile'])->name('customer.profile.update');
+Route::post('customer/password/update',[CustomerController::class,'updatePassword'])->name('customer.password.update');
 
 Route::get('/pesapal-ipn-listener',[IpnController::class,'__invoke'])->name('pesapal.ipn.listener');
