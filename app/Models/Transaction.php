@@ -10,7 +10,7 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'amount', 'currency', 'description', 'reference', 'phone', 'status', 'pesapal_transaction_tracking_id', 'pesapal_merchant_reference', 'pesapal_notification_type', 'payment_method'
+        'user_id', 'amount', 'currency', 'description', 'reference', 'phone', 'status', 'pesapal_transaction_tracking_id', 'pesapal_merchant_reference', 'pesapal_notification_type', 'payment_method','gate_way'
     ];
 
     protected $table = 'transactions';
@@ -21,14 +21,14 @@ class Transaction extends Model
     }
 
     //adds a user first if they are not in the users table then adds transaction details
-    public static function make($first_name, $last_name, $email, $amount, $currency, $desc, $reference, $phonenumber)
+    public static function make($first_name, $last_name, $email, $amount, $currency, $desc, $reference, $phonenumber, $gate_way)
     {
         $userExists = User::where('email',$email)->first();
         if($userExists)
         {
             $user_id = $userExists->id;
             Transaction::create([
-                'user_id' => $user_id, 'phone' => $phonenumber, 'amount' => $amount, 'currency' => $currency, 'description' => $desc, 'reference' => $reference
+                'user_id' => $user_id, 'phone' => $phonenumber, 'amount' => $amount, 'currency' => $currency, 'description' => $desc, 'reference' => $reference, 'gate_way' => $gate_way
             ]);
         }
         else

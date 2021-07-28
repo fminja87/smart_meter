@@ -25,6 +25,7 @@ class CreateTransactionsTable extends Migration
             $table->float('amount');
             $table->text('currency');
 
+
             //a new transaction will be marked as null until payment is confirmed
             $table->text('status')->nullable();
 
@@ -40,6 +41,7 @@ class CreateTransactionsTable extends Migration
 
             //many payment methods exist such as mpesa, tigopesa, visa, mastercard, american express etc...
             $table->text('payment_method')->nullable();
+            $table->string('gate_way');
         });
     }
 

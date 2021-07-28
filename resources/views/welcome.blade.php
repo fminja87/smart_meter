@@ -28,7 +28,7 @@
 
 </head>
 
-<body>
+<body style="background-image: url({{ asset('global_assets/images/backgrounds/gs5zYV.webp') }}); background-repeat: no-repeat;background-attachment: fixed;background-size: cover;">
 
 <!-- Main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">
@@ -83,7 +83,11 @@
         <!-- Content area -->
         <div class="content d-flex justify-content-center align-items-center">
 
-          <h1>A SMART METER WATER BILLING SYSTEM (SMWBS)</h1>
+            <h1 align="center" style="font-size: 50px;">
+                <i class="icon-meter2 icon-5x"></i>
+                <br />
+                <strong>A SMART METER WATER BILLING SYSTEM (SMWBS)</strong>
+            </h1>
 
         </div>
         <!-- /content area -->

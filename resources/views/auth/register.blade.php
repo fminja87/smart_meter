@@ -20,7 +20,7 @@
 
 </head>
 
-<body>
+<body style="background-image: url({{ asset('global_assets/images/backgrounds/gs5zYV.webp') }}); background-repeat: no-repeat;background-attachment: fixed;background-size: cover;">
 
 <!-- Main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">

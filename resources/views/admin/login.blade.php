@@ -28,12 +28,12 @@
 
 </head>
 
-<body>
+<body style="background-image: url({{ asset('global_assets/images/backgrounds/gs5zYV.webp') }}); background-repeat: no-repeat;background-attachment: fixed;background-size: cover;">
 
 <!-- Main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
-        <a href="" class="d-inline-block">
+        <a href="{{ url('/') }}" class="d-inline-block">
             <h1 style="color: #fff"><b>SMWBS</b></h1>
         </a>
     </div>

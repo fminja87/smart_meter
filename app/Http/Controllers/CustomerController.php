@@ -10,6 +10,7 @@ use App\Models\Wallet_withdraw;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthConsumer;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthRequest;
 use Bryceandy\Laravel_Pesapal\OAuth\OAuthSignatureMethod_HMAC_SHA1;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,8 +25,12 @@ class CustomerController extends Controller
 
     public function initiatePayments()
     {
+        $deposit = Wallet_store::where('user_id',Auth::user()->id)->sum('deposit');
+        $withdraw = Wallet_withdraw::where('user_id',Auth::user()->id)->sum('withdraw');
 
-        return view('customer.initiate_payment');
+        $balance = $deposit - $withdraw;
+
+        return view('customer.initiate_payment',['balance'=>$balance]);
     }
 
     public function MakePayment(Request $request)
@@ -42,7 +47,43 @@ class CustomerController extends Controller
             'description'=>'required',
         ]);
 
-        if ($request->gate_way == "WL"){
+        //get form details
+        $amount = $request->amount;
+        $currency = $request->currency;
+        $desc = $request->description;
+        $type = $request->type;
+        $reference = $this->random_reference();
+        $first_name = $request->first_name;
+        $last_name = $request->last_name;
+        $email = $request->email;
+        $gate_way = $request->gate_way;
+        $phonenumber = $request->phone;
+
+        //pesapal params
+        $token = $params = NULL;
+
+        $consumer_key = env('PESAPAL_KEY');
+        $consumer_secret = env('PESAPAL_SECRET');
+
+        $signature_method = new OAuthSignatureMethod_HMAC_SHA1();
+
+        $iframelink = 'https://www.pesapal.com/api/PostPesapalDirectOrderV4';
+
+        $callback_url = 'http://localhost/water_billing/public/pesapal/callback';
+
+        if ($request->gate_way == "Wallet"){
+
+            $deposit = Wallet_store::where('user_id',Auth::user()->id)->sum('deposit');
+            $withdraw = Wallet_withdraw::where('user_id',Auth::user()->id)->sum('withdraw');
+
+            $balance = $deposit - $withdraw;
+
+            if ($request->amount > $balance){
+
+                return redirect()->back()->with('info','The wallet balance is'.' '.'('.number_format($balance).')'.' '.'less than the payment you request'.' '.'('.number_format($request->amount).')'.'.')->withInput($request->all());
+            }
+
+            Transaction::make($first_name, $last_name, $email, $amount, $currency, $desc, $reference, $phonenumber, $gate_way);
 
             $withdraw = new Wallet_withdraw();
             $withdraw->user_id = Auth::user()->id;
@@ -57,37 +98,12 @@ class CustomerController extends Controller
         $payment->user_id = Auth::user()->id;
         $payment->save();
 
-        //pesapal params
-        $token = $params = NULL;
 
-        $consumer_key = env('PESAPAL_KEY');
-        $consumer_secret = env('PESAPAL_SECRET');
-
-        $signature_method = new OAuthSignatureMethod_HMAC_SHA1();
-
-//        if (env("PESAPAL_IS_LIVE") == true) {
-        $iframelink = 'https://www.pesapal.com/api/PostPesapalDirectOrderV4';
-//        } else {
-//            $iframelink = 'https://demo.pesapal.com/api/PostPesapalDirectOrderV4';
-        //}
-
-        //get form details
-        $amount = intval(number_format($request->amount, 0));
-        $currency = $request->currency;
-        $desc = $request->description;
-        $type = $request->type;
-        $reference = $this->random_reference();
-        $first_name = $request->first_name;
-        $last_name = $request->last_name;
-        $email = $request->email;
-        $phonenumber = $request->phone;
-
-        $callback_url = 'http://localhost/water_billing/public/pesapal/callback';
 
         //storing into the database
 
 
-        Transaction::make($first_name, $last_name, $email, $amount, $currency, $desc, $reference, $phonenumber);
+        Transaction::make($first_name, $last_name, $email, $amount, $currency, $desc, $reference, $phonenumber, $gate_way);
 
         /*Do not touch this xml variable in any way as it is the source of errors when you try
         to be clever and add extra spaces inside it*/
