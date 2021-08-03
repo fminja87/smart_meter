@@ -10,10 +10,16 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-curl": "*",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "bryceandy/laravel_pesapal": "^2.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "google/auth": "v1.16.0",
+        "google/cloud-firestore": "^1.19",
+        "grpc/grpc": "^1.38",
         "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/psr7": "^1.2",
+        "kreait/laravel-firebase": "^3.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5"
     },

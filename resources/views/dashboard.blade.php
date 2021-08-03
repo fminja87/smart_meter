@@ -225,7 +225,7 @@
 
             <div class="row">
                 <div class="col-sm-6 col-xl-4">
-                    <a href="">
+                    <a href="{{ route('customer.bills')}}">
                         <div class="card card-body bg-blue-400 has-bg-image">
                             <div class="media">
                                 <div class="media-body">

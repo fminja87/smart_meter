@@ -212,7 +212,7 @@
 
             <div class="card">
                 <div class="card-header header-elements-inline">
-                    <h5 class="card-title">Transactions</h5>
+                    <h5 class="card-title">Bills</h5>
                 </div>
 
                 <div class="card-body">
@@ -220,24 +220,18 @@
                         <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Litters</th>
+                            <th>Units</th>
                             <th>Amount</th>
-                            <th>Currency</th>
-                            <th>Phone Number</th>
-                            <th>Description</th>
-                            <th>Gateway</th>
-                            <th>ID</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($transactions as $transaction)
+                        @foreach($bills as $bill)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($transaction->created_at)->diffForHumans() }}</td>
-                                <td>{{ number_format($transaction->amount) }}</td>
-                                <td>{{ $transaction->currency }}</td>
-                                <td>{{ $transaction->phone }}</td>
-                                <td>{{ $transaction->description }}</td>
-                                <td>{{ $transaction->gate_way }}</td>
-                                <td>{{ $transaction->pesapal_transaction_tracking_id }}</td>
+                                <td>{{ \Carbon\Carbon::parse($bill->created_at)->diffForHumans() }}</td>
+                                <td>{{ $bill->litters }}L</td>
+                                <td>{{ $bill->units }}</td>
+                                <td>{{ number_format($bill->bill_price) }}TZS</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\IpnController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin;
+use App\Http\Controllers\FireBaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +52,7 @@ Route::get('customer/wallet/withdraw/history',[CustomerController::class,'withdr
 Route::get('customer/profile',[CustomerController::class,'userProfile'])->name('customer.profile');
 Route::post('customer/profile/update',[CustomerController::class,'updateProfile'])->name('customer.profile.update');
 Route::post('customer/password/update',[CustomerController::class,'updatePassword'])->name('customer.password.update');
+
+Route::get('customer/bills',[FireBaseController::class,'getCustomerVolume'])->name('customer.bills');
 
 Route::get('/pesapal-ipn-listener',[IpnController::class,'__invoke'])->name('pesapal.ipn.listener');
