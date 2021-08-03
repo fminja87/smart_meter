@@ -219,6 +219,40 @@
 
             <div class="card">
                 <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Bills Generation</h5>
+                </div>
+
+                <div class="card-body">
+                    <form action="" method="POST">
+                        @csrf
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Starting Date</label>
+                                    <input type="text" name="starting_date" id="starting_date" value="{{ old('starting_date') }}" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>End Date</label>
+                                    <input type="email" name="end_date" id="end_date" value="{{ old('end_date') }}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                            <button type="submit" class="btn btn-block btn-primary">Generate Bills</button>
+                        </div>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
                     <h5 class="card-title">Customers</h5>
                 </div>
 

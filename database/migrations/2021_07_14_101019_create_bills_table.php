@@ -19,6 +19,7 @@ class CreateBillsTable extends Migration
             $table->string("litters");
             $table->string("units");
             $table->float('bill_price');
+            $table->string('vourcher')->nullable();
             $table->timestamps();
 
 
