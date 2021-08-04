@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
 
             //only include user_id if you want to associate a user on your Users table with this Transaction
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('bill_voucher_id');
+            $table->unsignedBigInteger('bill_voucher_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('bill_voucher_id')->references('id')->on('bill_vouchers');
 
