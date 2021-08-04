@@ -53,6 +53,6 @@ class AccountAuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->intended(route('admin.login'));
+        return redirect()->intended(route('accountant.login'));
     }
 }
