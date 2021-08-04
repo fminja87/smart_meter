@@ -217,11 +217,13 @@
 
                 <div class="card-body">
                   @if ($bill == null)
-                      
+                  <h1 align="center">No Bill</h1>
                   @else
+                  <h1 align="center">
                   {{ $bill->vourcher_number }}
                   {{ $bill->starting_date }}
                   {{ $bill->end_date }}
+                  </h1>
                   @endif
                 </div>
             </div>
