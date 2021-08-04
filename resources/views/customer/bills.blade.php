@@ -216,9 +216,13 @@
                 </div>
 
                 <div class="card-body">
-                    {{ $bill->vourcher_number }}
-                    {{ $bill->starting_date }}
-                    {{ $bill->end_date }}
+                  @if ($bill == null)
+                      
+                  @else
+                  {{ $bill->vourcher_number }}
+                  {{ $bill->starting_date }}
+                  {{ $bill->end_date }}
+                  @endif
                 </div>
             </div>
 
