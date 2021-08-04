@@ -221,17 +221,21 @@
                         <tr>
                             <th>Date</th>
                             <th>Litters</th>
-                            <th>Units</th>
-                            <th>Amount</th>
+{{--                            <th>Units</th>--}}
+{{--                            <th>Amount</th>--}}
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($bills as $bill)
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($bill->created_at)->diffForHumans() }}</td>
-                                <td>{{ $bill->litters }}L</td>
-                                <td>{{ $bill->units }}</td>
-                                <td>{{ number_format($bill->bill_price) }}TZS</td>
+                                <td>
+                                    @foreach(json_decode($bill->litters) as $litter)
+                                        {{ $litter }},
+                                    @endforeach
+                                </td>
+{{--                                <td>{{ $bill->units }}</td>--}}
+{{--                                <td>{{ number_format($bill->bill_price) }}TZS</td>--}}
                             </tr>
                         @endforeach
                         </tbody>

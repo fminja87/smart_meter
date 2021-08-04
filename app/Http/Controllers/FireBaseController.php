@@ -23,9 +23,10 @@ class FireBaseController extends Controller
 
         $factory = (new Factory)->withServiceAccount(__DIR__.'/firebase_credentials.json')->withDatabaseUri('https://smart-water-db-2f249-default-rtdb.firebaseio.com/');
         $database = $factory->createDatabase();
-        $refence = $database->getReference('sensor');
+        $refence = $database->getReference('fuelsensor');
         $snapshort = $refence->getSnapshot();
         $values = $snapshort->getValue();
+
 
     if(empty($values)){
 
@@ -37,14 +38,12 @@ class FireBaseController extends Controller
         foreach($values as $value){
 
             $new_bills = new Bill();
-            $new_bills->litters = $value;
-            $new_bills->units = $new_bills->litters / 1000;
-            $new_bills->bill_price = $new_bills->units * 1663;
+            $new_bills->litters = json_encode($value);
             $new_bills->save();
         }
 
     }
-      
+
     $bills = Bill::all();
 
     return view('customer.bills',['bills'=>$bills]);
