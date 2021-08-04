@@ -17,8 +17,8 @@ class CreateBillsTable extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id")->nullable();
             $table->string("litters");
-            $table->string("units");
-            $table->float('bill_price');
+            $table->string("units")->nullable();
+            $table->float('bill_price')->nullable();
             $table->string('vourcher')->nullable();
             $table->timestamps();
 

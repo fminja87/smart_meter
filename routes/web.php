@@ -40,6 +40,7 @@ Route::get('admin/customers/bills',[AdminController::class,'showCustomerBills'])
 Route::get('admin/profile',[AdminController::class,'profile'])->name('admin.profile');
 Route::post('admin/update/profile',[AdminController::class,'updateProfile'])->name('admin.update.profile');
 Route::post('admin/update/password',[AdminController::class,'updatePassword'])->name('admin.update.password');
+Route::post('admin/bills/generation',[AdminController::class,'generateBills'])->name('admin.bills.generation');
 
 Route::get('customer/initiate/payment',[CustomerController::class,'initiatePayments'])->name('customer.initiate.payment');
 Route::post('customer/initiate/payment/submit',[CustomerController::class,'MakePayment'])->name('customer.initiate.payment.submit');

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Bill;
+use App\Models\Bill_voucher;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +44,43 @@ class AdminController extends Controller
 
         $customers = User::select('*')->orderBy('id','DESC')->get();
         return view('admin.customers',['customers'=>$customers]);
+   }
+
+   public function generateBills(Request $request): \Illuminate\Http\RedirectResponse
+   {
+
+        $this->validate($request,[
+            'start_date'=>'required',
+            'end_date'=>'required'
+        ]);
+
+        $start = Carbon::createFromFormat('d/m/Y',$request->input('start_date'))->format('Y-m-d');
+        $end = $request->input('end_date');
+
+        $users = User::all();
+
+        if (count($users) == 0){
+
+            return redirect()->back()->with('error','No user in the system');
+        }
+
+        foreach ($users as $user){
+
+            $bill = new Bill_voucher();
+            $bill->user_id = $user->id;
+            $bill->starting_date = $start;
+            $bill->end_date = $end;
+            $bill->vourcher_number = rand(10000000000, 9999999999999);
+            $bill->save();
+        }
+
+        $bill_vourcher = Bill_voucher::latest()->first();
+
+        $bill_update = DB::table('bills')
+            ->whereBetween('created_at', [$start, $end])
+            ->update(['vourcher'=>$bill_vourcher->vourcher_number]);
+
+        return redirect()->back()->with('success','Bills generated successful');
    }
 
    public function showCustomerBills(){

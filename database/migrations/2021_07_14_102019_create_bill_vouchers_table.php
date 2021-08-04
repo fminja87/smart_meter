@@ -19,9 +19,9 @@ class CreateBillVouchersTable extends Migration
             $table->string("starting_date");
             $table->string("end_date");
             $table->string("vourcher_number");
-            $table->string("total_litters");
-            $table->string("total_units");
-            $table->string("total_bill");
+            $table->string("total_litters")->nullable();
+            $table->string("total_units")->nullable();
+            $table->string("total_bill")->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ADMIN | CUSTOMERS</title>
+    <title>ADMIN | BILLS</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -23,17 +23,24 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/pickers/anytime.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
 
-    <script src="{{ asset('global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('global_assets/js/demo_pages/picker_date.js') }}"></script>
     <!-- /theme JS files -->
 
 </head>
 
 <body>
 
+<!-- Main navbar -->
 <!-- Main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
@@ -183,6 +190,11 @@
 
     </div>
     <!-- /main sidebar -->
+<!-- /main navbar -->
+
+
+<!-- Page content -->
+<div class="page-content">
 
 
     <!-- Main content -->
@@ -217,24 +229,74 @@
         <!-- Content area -->
         <div class="content">
 
+            @if ($message = Session::get('error'))
+
+                <div class="alert alert-danger alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
+                </div>
+
+            @endif
+
+            @if ($message = Session::get('info'))
+
+                <div class="alert alert-info alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
+                </div>
+
+            @endif
+
+            @if ($message = Session::get('success'))
+
+                <div class="alert alert-success alert-block">
+
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                    <strong>{{ $message }}</strong>
+
+                </div>
+
+            @endif
+
             <div class="card">
                 <div class="card-header header-elements-inline">
                     <h5 class="card-title">Bills Generation</h5>
                 </div>
 
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('admin.bills.generation') }}" method="POST">
                         @csrf
 
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Starting Date</label>
-                                    <input type="text" name="starting_date" id="starting_date" value="{{ old('starting_date') }}" class="form-control">
+                                    <div class="form-group">
+                                        <label>Starting Date:</label>
+                                        <div class="input-group">
+										<span class="input-group-prepend">
+											<span class="input-group-text"><i class="icon-calendar22"></i></span>
+										</span>
+                                            <input type="text" class="form-control daterange-single" name="start_date" id="start_date" required>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>End Date</label>
-                                    <input type="email" name="end_date" id="end_date" value="{{ old('end_date') }}" class="form-control">
+                                    <div class="form-group">
+                                        <label>End Date:</label>
+                                        <div class="input-group">
+										<span class="input-group-prepend">
+											<span class="input-group-text"><i class="icon-calendar22"></i></span>
+										</span>
+                                            <input type="text" class="form-control daterange-single" name="end_date" id="end_date" required>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -243,10 +305,10 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-12">
-                            <button type="submit" class="btn btn-block btn-primary">Generate Bills</button>
+                                    <button type="submit" class="btn btn-block btn-primary">Generate Bills</button>
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                      </div>
                     </form>
                 </div>
             </div>
@@ -314,4 +376,3 @@
 
 </body>
 </html>
-
