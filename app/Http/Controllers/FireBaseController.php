@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bill;
+use App\Models\Bill_voucher;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
 use Kreait\Firebase\Database;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class FireBaseController extends Controller
@@ -20,6 +22,9 @@ class FireBaseController extends Controller
     }
 
     public function getCustomerVolume(){
+
+        $bill = Bill_voucher::where('user_id', Auth::user()->id)->latest()->first();
+
 
         $factory = (new Factory)->withServiceAccount(__DIR__.'/firebase_credentials.json')->withDatabaseUri('https://smart-water-db-2f249-default-rtdb.firebaseio.com/');
         $database = $factory->createDatabase();
@@ -46,6 +51,6 @@ class FireBaseController extends Controller
 
     $bills = Bill::all();
 
-    return view('customer.bills',['bills'=>$bills]);
+    return view('customer.bills',['bills'=>$bills,'bill'=>$bill]);
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ADMIN | BILLS</title>
+    <title>ADMIN | CUSTOMERS</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -23,27 +23,17 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/anytime.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
-
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/picker_date.js') }}"></script>
-    <!-- /theme JS files -->
-
     <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
     <script src="{{ asset('global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <!-- /theme JS files -->
 
 </head>
 
 <body>
 
-<!-- Main navbar -->
 <!-- Main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand">
@@ -83,10 +73,10 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{ route('admin.profile') }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+                    <a href="{{ route('accountant.profile') }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
-                        <form id="out-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                    <a href="{{ route('accountant.logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
+                        <form id="out-form" action="{{ route('accountant.logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                         Logout
@@ -153,7 +143,7 @@
                     <!-- Main -->
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.home') }}" class="nav-link">
+                        <a href="{{ route('accountant.home') }}" class="nav-link">
                             <i class="icon-home4"></i>
                             <span>
 									Dashboard
@@ -161,7 +151,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.customers') }}" class="nav-link">
+                        <a href="{{ route('accountant.customers') }}" class="nav-link">
                             <i class="icon-users"></i>
                             <span>
 									Customers
@@ -169,7 +159,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.customers.bills') }}" class="nav-link active">
+                        <a href="{{ route('accountant.customers.bills') }}" class="nav-link">
                             <i class="icon-meter-fast"></i>
                             <span>
 									Bills
@@ -177,7 +167,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.profile') }}" class="nav-link">
+                        <a href="{{ route('accountant.profile') }}" class="nav-link active">
                             <i class="icon-profile"></i>
                             <span>
 									Profile
@@ -193,11 +183,6 @@
 
     </div>
     <!-- /main sidebar -->
-<!-- /main navbar -->
-
-
-<!-- Page content -->
-<div class="page-content">
 
 
     <!-- Main content -->
@@ -207,7 +192,7 @@
         <div class="page-header page-header-light">
             <div class="page-header-content header-elements-md-inline">
                 <div class="page-title d-flex">
-                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Dashboard</h4>
+                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Profile</span></h4>
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
                 </div>
 
@@ -216,8 +201,8 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer's</a>
-                        <span class="breadcrumb-item active">List</span>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i>Admin</a>
+                        <span class="breadcrumb-item active">Profile</span>
                     </div>
 
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
@@ -268,81 +253,119 @@
 
             @endif
 
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <h5 class="card-title">Bills Generation</h5>
-                </div>
+            <div class="row">
 
-                <div class="card-body">
-                    <form action="{{ route('admin.bills.generation') }}" method="POST">
-                        @csrf
+                <div class="col-lg-8">
+                    <!-- Profile info -->
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Profile information</h5>
+                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Starting Date:</label>
-                                        <div class="input-group">
-										<span class="input-group-prepend">
-											<span class="input-group-text"><i class="icon-calendar22"></i></span>
-										</span>
-                                            <input type="text" class="form-control daterange-single" name="start_date" id="start_date" required>
+                        <div class="card-body">
+                            <form action="{{ route('accountant.update.profile') }}" method="POST">
+                                @csrf
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Full name</label>
+                                            <input type="text" name="full_name" id="full_name" value="{{Auth::user()->name}}" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                            <input type="email" name="email" id="email" value="{{ Auth::user()->email }}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>End Date:</label>
-                                        <div class="input-group">
-										<span class="input-group-prepend">
-											<span class="input-group-text"><i class="icon-calendar22"></i></span>
-										</span>
-                                            <input type="text" class="form-control daterange-single" name="end_date" id="end_date" required>
+
+
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /profile info -->
+
+
+                    <!-- Account settings -->
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h5 class="card-title">Account settings</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <form action="{{ route('accountant.update.password') }}" method="POST">
+                                @csrf
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Current password</label>
+                                            <input type="password" name="admin_old_password" id="admin_old_password" class="form-control{{ $errors->has('admin_old_password') ? ' is-invalid' : '' }}" placeholder="Enter Current Password">
+                                            @if ($errors->has('admin_old_password'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('admin_old_password') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>New password</label>
+                                            <input type="password" name="password" id="password" placeholder="Enter new password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback" role="alert">
+                                                   <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label>Repeat New password</label>
+                                            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Repeat new password" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
                         </div>
+                    </div>
+                    <!-- /account settings -->
 
+                </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-block btn-primary">Generate Bills</button>
+                <div class="col-lg-4">
+                    <!-- User card -->
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="card-img-actions d-inline-block mb-3">
+                                <img class="img-fluid rounded-circle" src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}" width="170" height="170" alt="">
+                                <div class="card-img-actions-overlay card-img rounded-circle">
+                                    <a href="#" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+                                        <i class="icon-plus3"></i>
+                                    </a>
+                                    <a href="" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
+                                        <i class="icon-link"></i>
+                                    </a>
                                 </div>
                             </div>
+
+                            <h6 class="font-weight-semibold mb-0">{{ Auth::user()->name }}</h6>
+                            <span class="d-block text-muted">{{ Auth::user()->email }}</span>
+
                         </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <h5 class="card-title">Customers Bills</h5>
+                    </div>
+                    <!-- /user card -->
                 </div>
 
-                <table class="table datatable-basic">
-                    <thead>
-                    <tr>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Vourcher Number</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($bills as $bill)
-                        <tr>
-                            <td>{{ \Carbon\Carbon::parse($bill->starting_date)->format('d M Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($bill->end_date)->format('d M Y') }}</td>
-                            <td>{{ $bill->name }}</td>
-                            <td></td>
-                            <td>{{ $bill->vourcher_number }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
             </div>
 
         </div>
@@ -375,3 +398,4 @@
 
 </body>
 </html>
+

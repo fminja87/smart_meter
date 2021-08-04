@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use App\Models\Bill;
+use App\Models\Account;
+use Illuminate\Http\Request;
 use App\Models\Bill_voucher;
 use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class AdminController extends Controller
+class AccountantController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:accountant');
     }
 
-   public function home(){
-
-       $date = date('Y-m-d');
+    public function home(){
 
         $customers = User::select('*')->count('*');
 
@@ -31,19 +28,13 @@ class AdminController extends Controller
 
         $paid = Transaction::where('status','!=', null)->count('*');
 
-        $today_transactions = DB::table('transactions')
-            ->join('users','transactions.user_id','=','users.id')
-            ->whereDate('transactions.created_at','=',$date)
-            ->select('transactions.*','users.name')
-            ->get();
+        return view('accountant.home',['customers'=>$customers, 'transactions'=>$transactions, 'paid'=>$paid]);
+    }
 
-       return view('admin.dashboard',['customers'=>$customers, 'transactions'=>$transactions, 'paid'=>$paid,'today_transactions'=>$today_transactions]);
-   }
-
-   public function showCustomers(){
+    public function showCustomers(){
 
         $customers = User::select('*')->orderBy('id','DESC')->get();
-        return view('admin.customers',['customers'=>$customers]);
+        return view('accountant.customers',['customers'=>$customers]);
    }
 
    public function generateBills(Request $request): \Illuminate\Http\RedirectResponse
@@ -90,12 +81,12 @@ class AdminController extends Controller
         ->select('bill_vouchers.*','users.name')
         ->get();
 
-        return view('admin.bills',['bills'=>$bills]);
+        return view('accountant.bills',['bills'=>$bills]);
    }
 
    public function profile(){
 
-        return view('admin.profile');
+        return view('accountant.profile');
    }
 
     /**
@@ -107,7 +98,7 @@ class AdminController extends Controller
             'email'=>'required|email'
         ]);
 
-        $admin = Admin::find(Auth::user()->id)->update(['name'=>$request->full_name,'email'=>$request->email]);
+        $admin = Account::find(Auth::user()->id)->update(['name'=>$request->full_name,'email'=>$request->email]);
 
         return redirect()->back()->with('success','Profile info update successful');
    }
@@ -126,7 +117,7 @@ class AdminController extends Controller
 
         if (Hash::check($request->admin_old_password, $hashedPassword)) {
 
-            $user = Admin::find(Auth::id());
+            $user = Account::find(Auth::id());
             $user->password = Hash::make($request->password);
             $user->save();
 

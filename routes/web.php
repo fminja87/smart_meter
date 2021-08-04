@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AccountantController;
 use App\Http\Controllers\IpnController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin;
+use \App\Http\Controllers\Account;
 use App\Http\Controllers\FireBaseController;
 
 /*
@@ -33,6 +35,17 @@ Route::get('admin/login',[Admin\AdminLoginController::class,'adminLogin'])->name
 Route::post('admin/auth',[Admin\AdminLoginController::class,'adminAuth'])->name('admin.auth');
 Route::post('admin/logout',[Admin\AdminLoginController::class,'destroy'])->name('admin.logout');
 
+Route::get('accountant/login',[Account\AccountAuthController::class,'accontLogin'])->name('accountant.login');
+Route::post('accountant/auth',[Account\AccountAuthController::class,'accountAuth'])->name('accountant.auth');
+Route::post('accountant/logout',[Account\AccountAuthController::class,'destroy'])->name('accountant.logout');
+
+Route::get('accountant/home',[AccountantController::class,'home'])->name('accountant.home');
+Route::get('accountant/customers',[AccountantController::class,'showCustomers'])->name('accountant.customers');
+Route::get('accountant/customers/bills',[AccountantController::class,'showCustomerBills'])->name('accountant.customers.bills');
+Route::get('accountant/profile',[AccountantController::class,'profile'])->name('accountant.profile');
+Route::post('accountant/update/profile',[AccountantController::class,'updateProfile'])->name('accountant.update.profile');
+Route::post('accountant/update/password',[AccountantController::class,'updatePassword'])->name('accountant.update.password');
+Route::post('accountant/bills/generation',[AccountantController::class,'generateBills'])->name('accountant.bills.generation');
 
 Route::get('admin/home',[AdminController::class,'home'])->name('admin.home');
 Route::get('admin/customers',[AdminController::class,'showCustomers'])->name('admin.customers');

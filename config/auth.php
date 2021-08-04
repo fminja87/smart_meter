@@ -46,6 +46,11 @@ return [
             'provider' => 'admins',
         ],
 
+        'accountant' => [
+            'driver' => 'session',
+            'provider' => 'accountants',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -81,6 +86,11 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
+        'accountants' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Account::class,
+        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -111,6 +121,13 @@ return [
         ],
 
         'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'accountants' => [
             'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 60,

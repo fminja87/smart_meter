@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CUSTOMER | TRANSACTIONS</title>
+    <title>ADMIN | DASHBOARD</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -23,6 +23,12 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
+    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
@@ -73,11 +79,10 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{ route('customer.profile') }}" class="dropdown-item"><i class="icon-profile"></i> My profile</a>
-                    <a href="{{ route('customer.wallet') }}" class="dropdown-item"><i class="icon-wallet"></i> My balance</a>
+                    <a href="{{ route('accountant.profile') }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
-                        <form id="out-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <a href="{{ route('accountant.logout') }}" onclick="event.preventDefault();document.getElementById('out-form').submit();" class="dropdown-item"><i class="icon-switch2"></i>
+                        <form id="out-form" action="{{ route('accountant.logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                         Logout
@@ -124,7 +129,7 @@
                         <div class="media-body">
                             <div class="media-title font-weight-semibold">{{ Auth::User()->name }}</div>
                             <div class="font-size-xs opacity-50">
-                                <i class="icon-pin font-size-sm"></i> &nbsp;{{Auth::user()->region}}, {{Auth::user()->district}}
+                                <i class="icon-envelop font-size-sm"></i> &nbsp;{{ Auth::User()->email }}
                             </div>
                         </div>
 
@@ -144,7 +149,7 @@
                     <!-- Main -->
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                     <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link active">
+                        <a href="{{ route('accountant.home') }}" class="nav-link active">
                             <i class="icon-home4"></i>
                             <span>
 									Dashboard
@@ -152,15 +157,23 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('customer.wallet') }}" class="nav-link">
-                            <i class="icon-wallet"></i>
+                        <a href="{{ route('accountant.customers') }}" class="nav-link">
+                            <i class="icon-users"></i>
                             <span>
-									Wallet
+									Customers
 								</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('customer.profile') }}" class="nav-link">
+                        <a href="{{ route('accountant.customers.bills') }}" class="nav-link">
+                            <i class="icon-meter-fast"></i>
+                            <span>
+									Bills
+								</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('accountant.profile') }}" class="nav-link">
                             <i class="icon-profile"></i>
                             <span>
 									Profile
@@ -210,49 +223,93 @@
         <!-- Content area -->
         <div class="content">
 
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <h5 class="card-title">Monthly Bills</h5>
+            <div class="row">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card card-body bg-blue-400 has-bg-image">
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="mb-0">{{ number_format($customers) }}</h3>
+                                <span class="text-uppercase font-size-xs">total customers</span>
+                            </div>
+
+                            <div class="ml-3 align-self-center">
+                                <i class="icon-users icon-3x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    {{ $bill->vourcher_number }}
-                    {{ $bill->starting_date }}
-                    {{ $bill->end_date }}
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card card-body bg-danger-400 has-bg-image">
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="mb-0">{{ number_format($transactions) }}</h3>
+                                <span class="text-uppercase font-size-xs">Unpaid Transactions</span>
+                            </div>
+
+                            <div class="ml-3 align-self-center">
+                                <i class="icon-bag icon-3x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card card-body bg-success-400 has-bg-image">
+                        <div class="media">
+                            <div class="mr-3 align-self-center">
+                                <i class="icon-pointer icon-3x opacity-75"></i>
+                            </div>
+
+                            <div class="media-body text-right">
+                                <h3 class="mb-0">{{ number_format($paid) }}</h3>
+                                <span class="text-uppercase font-size-xs">Paid Bills</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="card">
                 <div class="card-header header-elements-inline">
-                    <h5 class="card-title">Bills</h5>
+                    <h5 class="card-title">Today Transactions</h5>
                 </div>
 
-                <div class="card-body">
-                    <table class="table datatable-basic">
-                        <thead>
+                {{-- <table class="table datatable-basic">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Gateway</th>
+                        <th>Phone</th>
+                        <th>Reference Number</th>
+                        <th>Tracking ID</th>
+                        <th>Merchant Reference</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($today_transactions as $today_transaction)
                         <tr>
-                            <th>Date</th>
-                            <th>Litters</th>
-{{--                            <th>Units</th>--}}
-{{--                            <th>Amount</th>--}}
+                            <td>{{ $today_transaction->name }}</td>
+                            <td>{{ $today_transaction->amount }}</td>
+                            <td>{{ $today_transaction->gate_way }}</td>
+                            <td>{{ $today_transaction->phone }}</td>
+                            <td>{{ $today_transaction->reference }}</td>
+                            <td>{{ $today_transaction->pesapal_transaction_tracking_id }}</td>
+                            <td>{{ $today_transaction->pesapal_merchant_reference }}</td>
+                            <td>
+                                @if($today_transaction->status != null)
+                                    <span class="badge badge-success">Paid</span>
+                                @else
+                                    <span class="badge badge-danger">Not Paid</span>
+                                @endif
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($bills as $bill)
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($bill->created_at)->diffForHumans() }}</td>
-                                <td>
-                                    @foreach(json_decode($bill->litters) as $litter)
-                                        {{ $litter }}L
-                                    @endforeach
-                                </td>
-{{--                                <td>{{ $bill->units }}</td>--}}
-{{--                                <td>{{ number_format($bill->bill_price) }}TZS</td>--}}
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                    @endforeach
+                    </tbody>
+                </table> --}}
             </div>
 
         </div>

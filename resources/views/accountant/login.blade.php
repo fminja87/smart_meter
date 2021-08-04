@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>HOME</title>
+    <title>LOGIN</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -44,39 +44,6 @@
         </button>
     </div>
 
-    <div class="collapse navbar-collapse" id="navbar-mobile">
-        <ul class="navbar-nav ml-auto">
-
-            <li class="nav-item dropdown">
-                <a href="{{ route('login') }}" class="navbar-nav-link">
-                    <i class="icon-user-lock"></i>
-                    <span class="d-md-none ml-2">Customer Login</span>
-                </a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a href="{{ route('admin.login') }}" class="navbar-nav-link">
-                    <i class="icon-user-block"></i>
-                    <span class="d-md-none ml-2">Admin Login</span>
-                </a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a href="{{ route('accountant.login') }}" class="navbar-nav-link">
-                    <i class="icon-meter2"></i>
-                    <span class="d-md-none ml-2">Accountant Login</span>
-                </a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a href="{{ route('register') }}" class="navbar-nav-link">
-                    <i class="icon-user-plus"></i>
-                    <span class="d-md-none ml-2">Customer Registration</span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
 </div>
 <!-- /main navbar -->
 
@@ -90,11 +57,43 @@
         <!-- Content area -->
         <div class="content d-flex justify-content-center align-items-center">
 
-            <h1 align="center" style="font-size: 50px;">
-                <i class="icon-meter2 icon-5x"></i>
-                <br />
-                <strong>A SMART METER WATER BILLING SYSTEM (SMWBS)</strong>
-            </h1>
+            <!-- Login form -->
+            <form class="login-form" action="{{ route('accountant.auth') }}" method="POST">
+                @csrf
+
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
+                            <h5 class="mb-0">Accountant Login</h5>
+                            <span class="d-block text-muted">Enter your credentials below</span>
+                        </div>
+
+                        <div class="form-group form-group-feedback form-group-feedback-left">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                            <div class="form-control-feedback">
+                                <i class="icon-user text-muted"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group-feedback form-group-feedback-left">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                            <div class="form-control-feedback">
+                                <i class="icon-lock2 text-muted"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 ml-2"></i></button>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="">Forgot password?</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- /login form -->
 
         </div>
         <!-- /content area -->
@@ -111,9 +110,8 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
 					<span class="navbar-text">
-						&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
+							&copy; {{ date('Y') }}. <a href="{{ url('/') }}">SMWBS</a>
 					</span>
-
             </div>
         </div>
         <!-- /footer -->
