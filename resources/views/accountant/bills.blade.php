@@ -274,7 +274,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('admin.bills.generation') }}" method="POST">
+                    <form action="{{ route('accountant.bills.generation') }}" method="POST">
                         @csrf
 
                         <div class="form-group">
