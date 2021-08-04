@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Admin;
 use App\Models\Bill;
 use App\Models\Bill_voucher;
@@ -134,5 +135,28 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('error', 'Ooooops!,Something went wrong(may be the old password is wrong)');
+    }
+
+    public function accountant(){
+
+        $accountants = Account::orderBy('id','DESC')->get();
+        return view('admin.accountant',['accountants'=>$accountants]);
+    }
+
+    public function addAccountant(Request $request){
+
+        $this->validate($request,[
+            'full_name'=>'required',
+            'email'=>'required|email'
+        ]);
+
+        $accountant = new Account();
+        $accountant->name = $request->full_name;
+        $accountant->email = $request->email;
+        $accountant->password = Hash::make('12345678');
+        $accountant->save();
+
+        return redirect()->back()->with('success','Accountant registered successful');
+
     }
 }

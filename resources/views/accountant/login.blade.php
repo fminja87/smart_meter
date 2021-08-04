@@ -70,10 +70,15 @@
                         </div>
 
                         <div class="form-group form-group-feedback form-group-feedback-left">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                            <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email" placeholder="Email" value="{{ old('email') }}">
                             <div class="form-control-feedback">
                                 <i class="icon-user text-muted"></i>
                             </div>
+                            @if ($errors->has('email'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
                         </div>
 
                         <div class="form-group form-group-feedback form-group-feedback-left">

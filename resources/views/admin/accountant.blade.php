@@ -151,7 +151,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.customers') }}" class="nav-link">
+                        <a href="{{ route('admin.customers') }}" class="nav-link ">
                             <i class="icon-users"></i>
                             <span>
 									Customers
@@ -167,7 +167,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.accountant')}}" class="nav-link">
+                        <a href="{{ route('admin.accountant') }}" class="nav-link active">
                             <i class="icon-users"></i>
                             <span>
                                 Accountants
@@ -175,7 +175,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.profile') }}" class="nav-link active">
+                        <a href="{{ route('admin.profile') }}" class="nav-link">
                             <i class="icon-profile"></i>
                             <span>
 									Profile
@@ -200,7 +200,7 @@
         <div class="page-header page-header-light">
             <div class="page-header-content header-elements-md-inline">
                 <div class="page-title d-flex">
-                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Profile</span></h4>
+                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Dashboard</h4>
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
                 </div>
 
@@ -209,8 +209,8 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i>Admin</a>
-                        <span class="breadcrumb-item active">Profile</span>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer's</a>
+                        <span class="breadcrumb-item active">List</span>
                     </div>
 
                     <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
@@ -227,153 +227,112 @@
 
             @if ($message = Session::get('error'))
 
-                <div class="alert alert-danger alert-block">
+            <div class="alert alert-danger alert-block">
 
-                    <button type="button" class="close" data-dismiss="alert">×</button>
+                <button type="button" class="close" data-dismiss="alert">×</button>
 
-                    <strong>{{ $message }}</strong>
+                <strong>{{ $message }}</strong>
 
+            </div>
+
+        @endif
+
+        @if ($message = Session::get('info'))
+
+            <div class="alert alert-info alert-block">
+
+                <button type="button" class="close" data-dismiss="alert">×</button>
+
+                <strong>{{ $message }}</strong>
+
+            </div>
+
+        @endif
+
+        @if ($message = Session::get('success'))
+
+            <div class="alert alert-success alert-block">
+
+                <button type="button" class="close" data-dismiss="alert">×</button>
+
+                <strong>{{ $message }}</strong>
+
+            </div>
+
+        @endif
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Add Accountants</h5>
                 </div>
 
-            @endif
 
-            @if ($message = Session::get('info'))
 
-                <div class="alert alert-info alert-block">
+                <form action="{{ route('admin.add.accountants') }}" method="POST">
+                    @csrf
 
-                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div class="card-body">
 
-                    <strong>{{ $message }}</strong>
-
-                </div>
-
-            @endif
-
-            @if ($message = Session::get('success'))
-
-                <div class="alert alert-success alert-block">
-
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-
-                    <strong>{{ $message }}</strong>
-
-                </div>
-
-            @endif
-
-            <div class="row">
-
-                <div class="col-lg-8">
-                    <!-- Profile info -->
-                    <div class="card">
-                        <div class="card-header header-elements-inline">
-                            <h5 class="card-title">Profile information</h5>
-                        </div>
-
-                        <div class="card-body">
-                            <form action="{{ route('admin.update.profile') }}" method="POST">
-                                @csrf
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Full name</label>
-                                            <input type="text" name="full_name" id="full_name" value="{{Auth::user()->name}}" class="form-control">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Email</label>
-                                            <input type="email" name="email" id="email" value="{{ Auth::user()->email }}" class="form-control">
-                                        </div>
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-right">
+                                <input type="text" class="form-control{{ $errors->has('full_name') ? ' is-invalid' : '' }}" name="full_name" id="full_name" placeholder="Full name" value="{{ old('full_name') }}">
+                                <div class="form-control-feedback">
+                                    <i class="icon-user-check text-muted"></i>
                                 </div>
-
-
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /profile info -->
-
-
-                    <!-- Account settings -->
-                    <div class="card">
-                        <div class="card-header header-elements-inline">
-                            <h5 class="card-title">Account settings</h5>
-                        </div>
-
-                        <div class="card-body">
-                            <form action="{{ route('admin.update.password') }}" method="POST">
-                                @csrf
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label>Current password</label>
-                                            <input type="password" name="admin_old_password" id="admin_old_password" class="form-control{{ $errors->has('admin_old_password') ? ' is-invalid' : '' }}" placeholder="Enter Current Password">
-                                            @if ($errors->has('admin_old_password'))
-                                                <span class="invalid-feedback" role="alert">
-                                                   <strong>{{ $errors->first('admin_old_password') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>New password</label>
-                                            <input type="password" name="password" id="password" placeholder="Enter new password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
-                                            @if ($errors->has('password'))
-                                                <span class="invalid-feedback" role="alert">
-                                                   <strong>{{ $errors->first('password') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label>Repeat New password</label>
-                                            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Repeat new password" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /account settings -->
-
-                </div>
-
-                <div class="col-lg-4">
-                    <!-- User card -->
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <div class="card-img-actions d-inline-block mb-3">
-                                <img class="img-fluid rounded-circle" src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}" width="170" height="170" alt="">
-                                <div class="card-img-actions-overlay card-img rounded-circle">
-                                    <a href="#" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
-                                        <i class="icon-plus3"></i>
-                                    </a>
-                                    <a href="" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
-                                        <i class="icon-link"></i>
-                                    </a>
-                                </div>
+                                @if ($errors->has('full_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $errors->first('full_name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
+                        </div>
 
-                            <h6 class="font-weight-semibold mb-0">{{ Auth::user()->name }}</h6>
-                            <span class="d-block text-muted">{{ Auth::user()->email }}</span>
-
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-right">
+                                <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email" placeholder="Email" value="{{ old('email') }}">
+                                <div class="form-control-feedback">
+                                    <i class="icon-user-check text-muted"></i>
+                                </div>
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                    <!-- /user card -->
+
+                    <button type="submit" class="btn btn-block bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-plus3"></i></b> Create account</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Accountants</h5>
                 </div>
 
+                <table class="table datatable-basic">
+                    <thead>
+                    <tr>
+                        <th>Registered at</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($accountants as $accountant)
+                    <tr>
+                        <td>{{ \Carbon\Carbon::parse($accountant->created_at)->diffForHumans() }}</td>
+                        <td>{{ $accountant->name }}</td>
+                        <td>{{ $accountant->email }}</td> 
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
 
         </div>

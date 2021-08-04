@@ -54,6 +54,8 @@ Route::get('admin/profile',[AdminController::class,'profile'])->name('admin.prof
 Route::post('admin/update/profile',[AdminController::class,'updateProfile'])->name('admin.update.profile');
 Route::post('admin/update/password',[AdminController::class,'updatePassword'])->name('admin.update.password');
 Route::post('admin/bills/generation',[AdminController::class,'generateBills'])->name('admin.bills.generation');
+Route::get('admin/accountant',[AdminController::class,'accountant'])->name('admin.accountant');
+Route::post('admin/add/accountants',[AdminController::class,'addAccountant'])->name('admin.add.accountants');
 
 Route::get('customer/initiate/payment',[CustomerController::class,'initiatePayments'])->name('customer.initiate.payment');
 Route::post('customer/initiate/payment/submit',[CustomerController::class,'MakePayment'])->name('customer.initiate.payment.submit');

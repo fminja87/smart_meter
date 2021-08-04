@@ -167,6 +167,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('admin.accountant')}}" class="nav-link">
+                            <i class="icon-users"></i>
+                            <span>
+                                Accountants
+								</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('admin.profile') }}" class="nav-link">
                             <i class="icon-profile"></i>
                             <span>
