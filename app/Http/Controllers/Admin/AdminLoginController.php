@@ -53,6 +53,6 @@ class AdminLoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->intended(route('admin.login'));
+        return redirect('/');
     }
 }

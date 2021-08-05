@@ -65,12 +65,17 @@ class AdminController extends Controller
             return redirect()->back()->with('error','No user in the system');
         }
 
+        $user_bill = DB::table('bills')->first();
+
         foreach ($users as $user){
 
             $bill = new Bill_voucher();
             $bill->user_id = $user->id;
             $bill->starting_date = $request->input('start_date');
             $bill->end_date = $request->input('end_date');
+            $bill->total_litters = $user_bill->litters;
+            $bill->total_units = $user_bill->units;
+            $bill->total_bill = $user_bill->bill_price;
             $bill->vourcher_number = rand(10000000000, 9999999999999);
             $bill->save();
         }

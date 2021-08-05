@@ -209,7 +209,7 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer's</a>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Manager's</a>
                         <span class="breadcrumb-item active">List</span>
                     </div>
 

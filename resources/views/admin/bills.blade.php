@@ -224,7 +224,7 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer's</a>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Manager's</a>
                         <span class="breadcrumb-item active">List</span>
                     </div>
 
@@ -335,6 +335,8 @@
                         <th>From</th>
                         <th>To</th>
                         <th>Name</th>
+                        <th>Litters</th>
+                        <th>Units</th>
                         <th>Amount</th>
                         <th>Vourcher Number</th>
                     </tr>
@@ -345,7 +347,9 @@
                             <td>{{ \Carbon\Carbon::parse($bill->starting_date)->format('d M Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($bill->end_date)->format('d M Y') }}</td>
                             <td>{{ $bill->name }}</td>
-                            <td></td>
+                            <td>{{$bill->total_litters}}L</td>
+                            <td>{{$bill->total_units}}</td>
+                            <td>{{$bill->total_bill}}TZS</td>
                             <td>{{ $bill->vourcher_number }}</td>
                         </tr>
                     @endforeach

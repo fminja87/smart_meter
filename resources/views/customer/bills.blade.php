@@ -219,11 +219,47 @@
                   @if ($bill == null)
                   <h1 align="center">No Bill</h1>
                   @else
-                  <h1 align="center">
-                  {{ $bill->vourcher_number }}
-                  {{ $bill->starting_date }}
-                  {{ $bill->end_date }}
-                  </h1>
+                  <div class="row">
+                      <div class="col-lg-4">
+                        <h4 align="center">
+    
+                           From: {{ $bill->starting_date }}
+                        
+                            </h4>
+                      </div>
+                      <div class="col-lg-4">
+                        <h4 align="center">
+                          
+                           To: {{ $bill->end_date }}
+                            </h4>
+                    </div>
+                    <div class="col-lg-4">
+                        <h4 align="center">
+                           Bill No: {{ $bill->vourcher_number }}
+        
+                            </h4>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <h4 align="center">
+    
+                           Volume: {{ $bill->total_litters }}L
+                        
+                            </h4>
+                      </div>
+                      <div class="col-lg-4">
+                        <h4 align="center">
+                          
+                           Units: {{ $bill->total_units }}
+                            </h4>
+                    </div>
+                    <div class="col-lg-4">
+                        <h4 align="center">
+                           Bill Amount: {{ $bill->total_bill }}TZS
+        
+                            </h4>
+                    </div>
+                  </div>
                   @endif
                 </div>
             </div>
@@ -239,21 +275,19 @@
                         <tr>
                             <th>Date</th>
                             <th>Litters</th>
-{{--                            <th>Units</th>--}}
-{{--                            <th>Amount</th>--}}
+                           <th>Units</th>
+                           <th>Amount</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($bills as $bill)
+                        @foreach($new_bills as $bill)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($bill->created_at)->diffForHumans() }}</td>
+                                <td>{{ \Carbon\Carbon::parse($bill->updated_at)->format('d M Y') }}</td>
                                 <td>
-                                    @foreach(json_decode($bill->litters) as $litter)
-                                        {{ $litter }}L
-                                    @endforeach
+                                 {{ $bill->litters }}L
                                 </td>
-{{--                                <td>{{ $bill->units }}</td>--}}
-{{--                                <td>{{ number_format($bill->bill_price) }}TZS</td>--}}
+                               <td>{{ $bill->units }}</td>
+                               <td>{{ number_format($bill->bill_price) }}TZS</td>
                             </tr>
                         @endforeach
                         </tbody>

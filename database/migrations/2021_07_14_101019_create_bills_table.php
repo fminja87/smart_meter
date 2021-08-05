@@ -16,8 +16,8 @@ class CreateBillsTable extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id")->nullable();
-            $table->string("litters");
-            $table->string("units")->nullable();
+            $table->float("litters");
+            $table->float("units")->nullable();
             $table->float('bill_price')->nullable();
             $table->string('vourcher')->nullable();
             $table->timestamps();

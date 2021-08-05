@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ADMIN | DASHBOARD</title>
+    <title>ACCOUNTANT | DASHBOARD</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -207,7 +207,7 @@
             <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
                 <div class="d-flex">
                     <div class="breadcrumb">
-                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Customer</a>
+                        <a href="" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Accountant</a>
                         <span class="breadcrumb-item active">Dashboard</span>
                     </div>
 

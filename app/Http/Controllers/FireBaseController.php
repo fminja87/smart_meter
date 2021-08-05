@@ -9,7 +9,7 @@ use Kreait\Firebase\ServiceAccount;
 use Kreait\Firebase\Database;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class FireBaseController extends Controller
 {
@@ -32,25 +32,44 @@ class FireBaseController extends Controller
         $snapshort = $refence->getSnapshot();
         $values = $snapshort->getValue();
 
+//  dd($values);
 
-    if(empty($values)){
+     $bills = DB::table('bills')->first();
 
-    }
-    else{
+    //  dd($bills);
 
-        $bills = Bill::query()->delete();
+    if($bills == null){
 
         foreach($values as $value){
 
             $new_bills = new Bill();
-            $new_bills->litters = json_encode($value);
+            $new_bills->litters = $value;
+            $new_bills->units =  $new_bills->litters / 1000;
+            $new_bills->bill_price = $new_bills->units * 1663;
             $new_bills->save();
         }
 
+        $new_bills = Bill::all();
+    
+        return view('customer.bills',['new_bills'=>$new_bills,'bill'=>$bill]);
+
+    }
+    else{
+
+        foreach($values as $value){
+
+            $update_bills = Bill::find($bills->id);
+            $update_bills->litters = $value;
+            $update_bills->units =  $update_bills->litters / 1000;
+            $update_bills->bill_price = $update_bills->units * 1663;
+            $update_bills->save();
+        }
+
+        $new_bills = Bill::all();
+    
+        return view('customer.bills',['new_bills'=>$new_bills,'bill'=>$bill]);
+
     }
 
-    $bills = Bill::all();
-
-    return view('customer.bills',['bills'=>$bills,'bill'=>$bill]);
     }
 }

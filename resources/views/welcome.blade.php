@@ -93,7 +93,7 @@
             <h1 align="center" style="font-size: 50px;">
                 <i class="icon-meter2 icon-5x"></i>
                 <br />
-                <strong>A SMART METER WATER BILLING SYSTEM (SMWBS)</strong>
+                <strong>A SMART METER WATER SYSTEM (SMWS)</strong>
             </h1>
 
         </div>
